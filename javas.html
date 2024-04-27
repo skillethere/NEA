@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Temperatures</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Background color for the entire page */
+        }
+        .container {
+            max-width: 800px; /* Adjust as needed */
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .box {
+            display: inline-block;
+            width: 48%; /* Adjust as needed */
+            margin: 10px;
+            padding: 20px;
+            background-color: #f9f9f9; /* Background color for each box */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for a raised effect */
+        }
+        h1 {
+            font-size: 52px; /* Adjust as needed */
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #A52A2A; /* Heading color */
+        }
+        h2 {
+            font-size: 24px; /* Adjust as needed */
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333333; /* Sub-heading color */
+        }
+        p {
+            font-size: 22px; /* Adjust as needed */
+            margin-bottom: 10px;
+            color: #666666; /* Text color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lab Temperatures</h1>
+        <h2>NEA Project</h2>
+        <div class="box" id="t1Box">
+            <p>Embedded Systems: <span id="t1Value">Loading...</span> C</p>
+        </div>
+        <div class="box" id="t2Box">
+            <p>Reconfig: <span id="t2Value">Loading...</span> C</p>
+        </div>
+        <div class="box" id="t3Box">
+            <p>Instrumentation: <span id="t3Value">Loading...</span> C</p>
+        </div>
+        <div class="box" id="t4Box">
+            <p>Power Electronics: <span id="t4Value">Loading...</span> C</p>
+        </div>
+    </div>
+
+    <script>
+        function fetchData() {
+            // Replace 'webhook_url' with your actual webhook URL
+            fetch('https://webhook.site/19979cd3-52e9-4b99-89dd-a5ed14039a25')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('t1Value').textContent = data.t1;
+                    document.getElementById('t2Value').textContent = data.t2;
+                    document.getElementById('t3Value').textContent = data.t3;
+                    document.getElementById('t4Value').textContent = data.t4;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Fetch data initially
+        fetchData();
+
+        // Fetch data periodically (every 5 seconds)
+        //setInterval(fetchData, 5000);
+    </script>
+</body>
+</html>
+
