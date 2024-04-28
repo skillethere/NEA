@@ -1,4 +1,4 @@
-<id=t1>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,18 +52,20 @@
     <div class="container">
         <h1>Lab Temperatures</h1>
         <h2>NEA Project</h2>
-    <table id="data-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be populated here dynamically -->
-        </tbody>
-    </table>
+    
+    <div class="box" id="t1Box">
+            <p>Embedded Systems: <span id="t1value">Loading...</span> C</p>
+        </div>
+    <div class="box" id="t2Box">
+            <p>Reconfig: <span id="t2value">Loading...</span> C</p>
+    </div>
+    <div class="box" id="t3Box">
+            <p>Instrumentation: <span id="t3value">Loading...</span> C</p>
+    </div>
+    <div class="box" id="t4Box">
+            <p>Power Electronics: <span id="t4value">Loading...</span> C</p>
+        </div>
+        </div>
    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <!-- FIREBASE FIRESTORE -->
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
@@ -101,19 +103,30 @@
 
         function fetchDataAndUpdateTable() {
             const tableBody = document.querySelector('#data-table tbody');
-            tableBody.innerHTML = ''; // Clear previous data
+            
 
             db.collection("test").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    const row = document.createElement('tr');
+                    
                     var t1=data["50"];
-                    row.innerHTML = `<td>${data["50"]}</td><td>${data["51"]}</td><td>${data["60"]}</td>`;
-                    tableBody.appendChild(row);
+                    var t2=data["52"];
+                    var t3=data["60"];
+                    var t4=data["51"];
+                    
+                    
+                    
+                    document.getElementById("t1value").innerText = t1;
+                    document.getElementById("t2value").innerText = t2;
+                    document.getElementById("t3value").innerText = t3;
+                    document.getElementById("t4value").innerText = t4;
+                    
                 });
+                
             }).catch((error) => {
                 console.error("Error getting documents: ", error);
             });
+            
         }
 
         fetchDataAndUpdateTable(); // Initial fetch
