@@ -1,88 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab Temperatures</title>
+    <title>Firestore Data</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0; /* Background color for the entire page */
+        table {
+            border-collapse: collapse;
+            width: 100%;
         }
-        .container {
-            max-width: 800px; /* Adjust as needed */
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
         }
-        .box {
-            display: inline-block;
-            width: 48%; /* Adjust as needed */
-            margin: 10px;
-            padding: 20px;
-            background-color: #f9f9f9; /* Background color for each box */
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for a raised effect */
-        }
-        h1 {
-            font-size: 52px; /* Adjust as needed */
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #A52A2A; /* Heading color */
-        }
-        h2 {
-            font-size: 24px; /* Adjust as needed */
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333333; /* Sub-heading color */
-        }
-        p {
-            font-size: 22px; /* Adjust as needed */
-            margin-bottom: 10px;
-            color: #666666; /* Text color */
+
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Lab Temperatures</h1>
-        <h2>NEA Project</h2>
-        <div class="box" id="t1Box">
-            <p>Embedded Systems: <span id="t1Value">Loading...</span> C</p>
-        </div>
-        <div class="box" id="t2Box">
-            <p>Reconfig: <span id="t2Value">Loading...</span> C</p>
-        </div>
-        <div class="box" id="t3Box">
-            <p>Instrumentation: <span id="t3Value">Loading...</span> C</p>
-        </div>
-        <div class="box" id="t4Box">
-            <p>Power Electronics: <span id="t4Value">Loading...</span> C</p>
-        </div>
-    </div>
 
-    <script>
-        function fetchData() {
-            // Replace 'webhook_url' with your actual webhook URL
-            fetch('https://webhook.site/19979cd3-52e9-4b99-89dd-a5ed14039a25')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('t1Value').textContent = data.t1;
-                    document.getElementById('t2Value').textContent = data.t2;
-                    document.getElementById('t3Value').textContent = data.t3;
-                    document.getElementById('t4Value').textContent = data.t4;
-                })
-                .catch(error => console.error('Error fetching data:', error));
+<body>
+
+    <h2>Firestore Data</h2>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here dynamically -->
+        </tbody>
+    </table>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <!-- FIREBASE FIRESTORE -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+    <!-- FIREBASE ANALYTICS -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+    <!-- FIREBASE CONFIG JS LINK-->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        // import { initializeApp, } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        // import { getAnalytics, } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
+        // import {
+        //     getFirestore, collection,
+        //     doc,
+        // } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js'
+        // // import {firebase} from ""
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkrHtKmYEOyVOdb-e-6qYJ2u1kjj--7q0",
+            authDomain: "mayank-ffa0f.firebaseapp.com",
+            projectId: "mayank-ffa0f",
+            storageBucket: "mayank-ffa0f.appspot.com",
+            messagingSenderId: "256445097873",
+            appId: "1:256445097873:web:bacd02b4e273ed35ab9c30",
+            measurementId: "G-F80PVZZBN4"
+        };
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        var db = firebase.firestore();
+
+
+        function fetchDataAndUpdateTable() {
+            const tableBody = document.querySelector('#data-table tbody');
+            tableBody.innerHTML = ''; // Clear previous data
+
+            db.collection("test").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${data["50"]}</td><td>${data["51"]}</td><td>${data["60"]}</td>`;
+                    tableBody.appendChild(row);
+                });
+            }).catch((error) => {
+                console.error("Error getting documents: ", error);
+            });
         }
 
-        // Fetch data initially
-        fetchData();
-
-        // Fetch data periodically (every 5 seconds)
-        setInterval(fetchData, 5000);
+        fetchDataAndUpdateTable(); // Initial fetch
+        setInterval(fetchDataAndUpdateTable, 10000); // Fetch every 10 seconds
     </script>
-</body>
-</html>
 
+</body>
+
+</html>
