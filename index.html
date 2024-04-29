@@ -1,4 +1,21 @@
 
+Conversation opened. 1 unread message.
+
+Skip to content
+Using BITS Pilani University Mail with screen readers
+1 of 1,865
+HTML Time
+Inbox
+Neha Umesh Kshirsagar
+	
+Attachments3:12 PM (16 minutes ago)
+	
+to me
+
+ One attachment  •  Scanned by Gmail
+	
+schedule. Press tab to insert.
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,6 +57,14 @@
             margin-bottom: 10px;
             color: #333333; /* Sub-heading color */
         }
+        h3 {
+            font-size: 18px; /* Adjust as needed */
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000000; /* Sub-heading color */
+
+           }
+         
         p {
             font-size: 22px; /* Adjust as needed */
             margin-bottom: 10px;
@@ -52,9 +77,11 @@
     <div class="container">
         <h1>Lab Temperatures</h1>
         <h2>NEA Project</h2>
-    
+        <h3>Time: <span id="t5value">00</span>:<span id="t6value">00</span>:<span id="t7value">00</span> </h3>
+   
     <div class="box" id="t1Box">
             <p>Embedded Systems: <span id="t1value">Loading...</span> C</p>
+           
         </div>
     <div class="box" id="t2Box">
             <p>Reconfig: <span id="t2value">Loading...</span> C</p>
@@ -103,30 +130,35 @@
 
         function fetchDataAndUpdateTable() {
             const tableBody = document.querySelector('#data-table tbody');
-            
+           
 
             db.collection("test").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    
+                   
                     var t1=data["50"];
                     var t2=data["52"];
                     var t3=data["60"];
                     var t4=data["51"];
-                    
-                    
-                    
+                    var t5=data["70"];
+                    var t6=data["71"];
+                    var t7=data["72"];
+                   
+                   
                     document.getElementById("t1value").innerText = t1;
                     document.getElementById("t2value").innerText = t2;
                     document.getElementById("t3value").innerText = t3;
                     document.getElementById("t4value").innerText = t4;
-                    
+                    document.getElementById("t5value").innerText = t5;
+                    document.getElementById("t6value").innerText = t6;
+                    document.getElementById("t7value").innerText = t7;
+                   
                 });
-                
+               
             }).catch((error) => {
                 console.error("Error getting documents: ", error);
             });
-            
+           
         }
 
         fetchDataAndUpdateTable(); // Initial fetch
@@ -136,3 +168,6 @@
 </body>
 
 </html>
+
+Time.txt
+Displaying Time.txt.
